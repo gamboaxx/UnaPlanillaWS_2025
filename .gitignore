@@ -1,0 +1,22 @@
+# Compilados
+*.class
+*.jar
+*.war
+
+# IDEs
+.idea/
+.vscode/
+nbproject/private/
+
+# Logs y temporales
+*.log
+*.tmp
+*.bak
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Maven / Gradle
+target/
+build/
