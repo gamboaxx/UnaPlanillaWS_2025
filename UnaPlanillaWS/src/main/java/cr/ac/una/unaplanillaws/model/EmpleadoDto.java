@@ -5,6 +5,7 @@
  */
 package cr.ac.una.unaplanillaws.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -13,22 +14,36 @@ import java.util.Objects;
  *
  * @author Carlos
  */
+@Schema(description="Empleado")
 public class EmpleadoDto {
 
+    @Schema(description = "Id del empleado", example="1")
     private Long id;
+    @Schema(description = "Nombre del empleado", example="Emmanuel")
     private String nombre;
+    @Schema(description = "Primer apellido del empleado", example="Gamboa")
     private String primerApellido;
+    @Schema(description = "Segundo apellido del empleado", example="Retana")
     private String segundoApellido;
+    @Schema(description = "Cedula del empleado", example="0100100")
     private String cedula;
+    @Schema(description = "Genero del empleado", example="M", allowableValues = "M,F" )
     private String genero;
+    @Schema(description = "Correo del empleado", example="ejemplo@gmail.com")
     private String correo;
     private Boolean administrador;
+    @Schema(description = "Usuario del empleado", example="gamboaxx")
     private String usuario;
+    @Schema(description = "Clave del empleado", example="xxxxxx")
     private String clave;
+    @Schema(description = "Fecha de ingreso del empleado", example="25/05/25")
     private LocalDate fechaIngreso;
+    @Schema(description = "Fecha de salida del empleado", example="26/05/25")
     private LocalDate fechaSalida;
+    @Schema(description = "Estado del empleado", example="A")
     private Boolean activo;
     private Long version;
+    @Schema(description = "Indica si el registro fue modificado", example="true")
     private Boolean modificado;
     private LocalDateTime fecha;
     // TODO
