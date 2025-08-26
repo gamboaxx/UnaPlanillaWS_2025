@@ -1,0 +1,57 @@
+# ============================
+# Compilados de Java
+# ============================
+*.class
+*.jar
+*.war
+*.ear
+
+# ============================
+# Carpetas de build / compilacion
+# ============================
+target/
+build/
+dist/
+out/
+
+# ============================
+# Configuracion de IDEs
+# ============================
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# VSCode
+.vscode/
+
+# ============================
+# Payara / GlassFish
+# ============================
+*.log
+*.tmp
+*.bak
+generated/
+.derby/
+appserver-domain/
+glassfish/domains/
+payara5/
+payara6/
+domain1/
+
+# ============================
+# Archivos del sistema operativo
+# ============================
+.DS_Store
+Thumbs.db
+/UnaPlanilla/target
+/UnaPlanilla/target
