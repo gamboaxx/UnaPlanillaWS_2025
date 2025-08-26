@@ -1,5 +1,6 @@
 package cr.ac.una.unaplanilla.model;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.time.LocalDate;
 import java.util.Objects;
 import javafx.beans.property.BooleanProperty;
@@ -157,67 +158,67 @@ public class EmpleadoDto {
         this.activo.set(activo);
     }
 
-    // TODO
+    @JsonbTransient
     public StringProperty getIdProperty() {
         return id;
     }
 
-    // TODO
+    @JsonbTransient
     public StringProperty getNombreProperty() {
         return nombre;
     }
 
-    // TODO
+    @JsonbTransient
     public StringProperty getPrimerApellidoProperty() {
         return primerApellido;
     }
 
-    // TODO
+    @JsonbTransient
     public StringProperty getSegundoApellidoProperty() {
         return segundoApellido;
     }
 
-    // TODO
+    @JsonbTransient
     public StringProperty getCedulaProperty() {
         return cedula;
     }
 
-    // TODO
+    @JsonbTransient
     public ObjectProperty<String> getGeneroProperty() {
         return genero;
     }
 
-    // TODO
+    @JsonbTransient
     public StringProperty getCorreoProperty() {
         return correo;
     }
 
-    // TODO
+    @JsonbTransient
     public BooleanProperty getAdministradorProperty() {
         return administrador;
     }
 
-    // TODO
+    @JsonbTransient
     public StringProperty getUsuarioProperty() {
         return usuario;
     }
 
-    // TODO
+    @JsonbTransient
     public StringProperty getClaveProperty() {
         return clave;
     }
 
-    // TODO
+    @JsonbTransient
     public ObjectProperty<LocalDate> getFechaIngresoProperty() {
         return fechaIngreso;
     }
 
-    // TODO
+    @JsonbTransient
     public ObjectProperty<LocalDate> getFechaSalidaProperty() {
         return fechaSalida;
     }
 
-    // TODO
+    @JsonbTransient
     public BooleanProperty getActivoProperty() {
         return activo;
     }
