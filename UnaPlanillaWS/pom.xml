@@ -1,4 +1,4 @@
- <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>cr.ac.una</groupId>
@@ -23,9 +23,9 @@
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-jaxrs2-jakarta</artifactId>
-            <version>2.2.29</version>
+            <version>2.2.28</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
             <version>2.27</version>
@@ -46,8 +46,6 @@
             <version>0.10.7</version>
         </dependency>
     </dependencies>
-    
-    
     <build>
         <plugins>
             <plugin>
@@ -107,6 +105,10 @@
                     </execution>
                 </executions>
             </plugin>
+
+            
+            
+            
             <!--Empaquetemos en nuestro WAR en la sección de docs el Swagger-UI-->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>

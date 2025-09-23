@@ -14,16 +14,17 @@ import java.util.Objects;
  *
  * @author Carlos
  */
-@Schema(description="Empleado")
+@Schema(description ="Empleado")
 public class EmpleadoDto {
 
+    
     @Schema(description = "Id del empleado", example="1")
     private Long id;
-    @Schema(description = "Nombre del empleado", example="Emmanuel")
+    @Schema(description = "Nombre del empleado", example="Isaac")
     private String nombre;
-    @Schema(description = "Primer apellido del empleado", example="Gamboa")
+    @Schema(description = "Primer apellido del empleado", example="Alvarado")
     private String primerApellido;
-    @Schema(description = "Segundo apellido del empleado", example="Retana")
+    @Schema(description = "Segundo apellido del empleado", example="Mata")
     private String segundoApellido;
     @Schema(description = "Cedula del empleado", example="0100100")
     private String cedula;
@@ -31,8 +32,9 @@ public class EmpleadoDto {
     private String genero;
     @Schema(description = "Correo del empleado", example="ejemplo@gmail.com")
     private String correo;
+     @Schema(description = "Indica si es admin", example="true")
     private Boolean administrador;
-    @Schema(description = "Usuario del empleado", example="gamboaxx")
+    @Schema(description = "Usuario del empleado", example="isaac")
     private String usuario;
     @Schema(description = "Clave del empleado", example="xxxxxx")
     private String clave;
@@ -46,6 +48,7 @@ public class EmpleadoDto {
     @Schema(description = "Indica si el registro fue modificado", example="true")
     private Boolean modificado;
     private LocalDateTime fecha;
+    private String token;
     // TODO
 
     public EmpleadoDto() {
@@ -204,6 +207,15 @@ public class EmpleadoDto {
         this.version = version;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    
     // TODO
 
     @Override

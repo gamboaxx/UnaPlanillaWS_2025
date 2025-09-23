@@ -1,6 +1,9 @@
 package cr.ac.una.unaplanilla.model;
 
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javafx.beans.property.BooleanProperty;
@@ -11,8 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
- * @author cbcar
+ * DTO para TipoPlanilla compatible con JSON-B (evita serializar JavaFX Properties).
  */
 public class TipoPlanillaDto {
 
@@ -20,13 +22,18 @@ public class TipoPlanillaDto {
     private StringProperty codigo;
     private StringProperty descripcion;
     private StringProperty planillaPorMes;
+
     private Integer anoUltimaPlanilla;
     private Integer mesUltimaPlanilla;
     private Integer numeroUltimaPlanilla;
+
     private BooleanProperty activo;
     private Long version;
+
+    // Listas para UI y transporte
     private ObservableList<EmpleadoDto> empleados;
     private List<EmpleadoDto> empleadosEliminados;
+
     private Boolean modificado;
 
     public TipoPlanillaDto() {
@@ -36,20 +43,19 @@ public class TipoPlanillaDto {
         this.planillaPorMes = new SimpleStringProperty("");
         this.activo = new SimpleBooleanProperty(true);
         this.modificado = false;
-        empleados = FXCollections.observableArrayList();
-        empleadosEliminados = new ArrayList<>();
+        this.empleados = FXCollections.observableArrayList();
+        this.empleadosEliminados = new ArrayList<>();
     }
 
+    // ====== Getters/Setters "planos" (serializables) ======
+
     public Long getId() {
-        if (this.id.get() != null && !this.id.get().isEmpty()) {
-            return Long.valueOf(this.id.get());
-        } else {
-            return null;
-        }
+        String s = this.id.get();
+        return (s != null && !s.isEmpty()) ? Long.valueOf(s) : null;
     }
 
     public void setId(Long id) {
-        this.id.set(id.toString());
+        this.id.set(id == null ? "" : id.toString());
     }
 
     public String getCodigo() {
@@ -69,15 +75,12 @@ public class TipoPlanillaDto {
     }
 
     public Integer getPlanillaPorMes() {
-        if (this.planillaPorMes.get() != null && !this.planillaPorMes.get().isEmpty()) {
-            return Integer.valueOf(this.planillaPorMes.get());
-        } else {
-            return null;
-        }
+        String s = this.planillaPorMes.get();
+        return (s != null && !s.isEmpty()) ? Integer.valueOf(s) : null;
     }
 
     public void setPlanillaPorMes(Integer planillaPorMes) {
-        this.planillaPorMes.set(planillaPorMes.toString());
+        this.planillaPorMes.set(planillaPorMes == null ? "" : planillaPorMes.toString());
     }
 
     public Integer getAnoUltimaPlanilla() {
@@ -128,47 +131,58 @@ public class TipoPlanillaDto {
         this.modificado = modificado;
     }
 
-    // TODO
-    public StringProperty getIdProperty() {
-        return id;
-    }
+    // ====== JavaFX Properties (ocultas para JSON-B) ======
 
-    // TODO
-    public StringProperty getCodigoProperty() {
-        return codigo;
-    }
+    @JsonbTransient
+    public StringProperty getIdProperty() { return id; }
 
-    // TODO
-    public StringProperty getDescripcionProperty() {
-        return descripcion;
-    }
+    @JsonbTransient
+    public StringProperty getCodigoProperty() { return codigo; }
 
-    // TODO
-    public StringProperty getPlanillaPorMesProperty() {
-        return planillaPorMes;
-    }
+    @JsonbTransient
+    public StringProperty getDescripcionProperty() { return descripcion; }
 
-    // TODO
-    public BooleanProperty getActivoProperty() {
-        return activo;
-    }
+    @JsonbTransient
+    public StringProperty getPlanillaPorMesProperty() { return planillaPorMes; }
 
+    @JsonbTransient
+    public BooleanProperty getActivoProperty() { return activo; }
+
+    // ====== Empleados: ObservableList para UI + List para transporte ======
+
+    /** Lista observable para la UI (NO serializar). */
+    @JsonbTransient
     public ObservableList<EmpleadoDto> getEmpleados() {
         return empleados;
     }
 
-    // TODO
+    /** Setter de UI (NO usar para JSON-B). */
+    @JsonbTransient
     public void setEmpleados(ObservableList<EmpleadoDto> empleados) {
         this.empleados = empleados;
     }
 
+    /** Getter que JSON-B serializa como "empleados". */
+    @JsonbProperty("empleados")
+    public List<EmpleadoDto> getEmpleadosList() {
+        return new ArrayList<>(empleados);
+    }
+
+    /** Setter que JSON-B usará al deserializar "empleados". */
+    public void setEmpleadosList(List<EmpleadoDto> lista) {
+        this.empleados.setAll(lista == null ? Collections.emptyList() : lista);
+    }
+
+    /** Esta lista ya es List, JSON-B la maneja bien tal cual. */
     public List<EmpleadoDto> getEmpleadosEliminados() {
         return empleadosEliminados;
     }
 
     public void setEmpleadosEliminados(List<EmpleadoDto> empleadosEliminados) {
-        this.empleadosEliminados = empleadosEliminados;
+        this.empleadosEliminados = (empleadosEliminados == null) ? new ArrayList<>() : empleadosEliminados;
     }
+
+    // ====== equals/hashCode/toString ======
 
     @Override
     public int hashCode() {
@@ -179,15 +193,9 @@ public class TipoPlanillaDto {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
         final TipoPlanillaDto other = (TipoPlanillaDto) obj;
         return Objects.equals(this.id.get(), other.id.get());
     }
@@ -196,5 +204,4 @@ public class TipoPlanillaDto {
     public String toString() {
         return "TipoPlanillaDto{" + "codigo=" + codigo + ", descripcion=" + descripcion + '}';
     }
-
 }

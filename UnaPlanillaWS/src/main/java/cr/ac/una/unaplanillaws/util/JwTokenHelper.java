@@ -16,14 +16,15 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *
- * @author gambo
+ * @author crossac09
  */
 public class JwTokenHelper {
+    
     private static JwTokenHelper jwTokenHelper = null;
     private static final long EXPIRATION_LIMIT = 1;
     private static final long EXPIRATION_RENEWAL_LIMIT = 5;
-    private static final String AUTHETICATION_SCHEME = "Bearer ";
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private static final String AUTHENTICATION_SCHEME = "Bearer ";
+    private final Key  key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     
     private JwTokenHelper() {
     }
@@ -35,26 +36,30 @@ public class JwTokenHelper {
         return jwTokenHelper;
     }
     
-    public String generatePrivateKey(String username){
-        return AUTHETICATION_SCHEME + Jwts.builder()
+    public String generatePrivatekey(String username){
+    
+        return AUTHENTICATION_SCHEME + Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(getExpirationDate())
                 .signWith(key)
                 .compact();
+    
     }
     
     private Date getExpirationDate(){
-        long currentTimeInMillis = System.currentTimeMillis();
-        long expMilliSecond = TimeUnit.MINUTES.toMillis(EXPIRATION_LIMIT);
+        long currentTimeInMinutes = System.currentTimeMillis();
+        long expMillisSeconds = TimeUnit.MINUTES.toMillis(EXPIRATION_LIMIT);
         
-        return new Date(currentTimeInMillis + expMilliSecond);
+        return new Date(currentTimeInMinutes +expMillisSeconds );
+    
     }
     
-    public Claims claimKey(String privateKey) throws  ExpiredJwtException, MalformedJwtException{
+    public Claims claimKey(String privateKey) throws ExpiredJwtException, MalformedJwtException{
         return Jwts.parser().setSigningKey(key)
                 .parseClaimsJws(privateKey)
                 .getBody();
+   
     }
     
 }
