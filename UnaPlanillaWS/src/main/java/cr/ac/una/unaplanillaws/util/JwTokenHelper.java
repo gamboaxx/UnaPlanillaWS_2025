@@ -5,7 +5,9 @@
 package cr.ac.una.unaplanillaws.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -49,7 +51,7 @@ public class JwTokenHelper {
         return new Date(currentTimeInMillis + expMilliSecond);
     }
     
-    public Claims claimKey(String privateKey){
+    public Claims claimKey(String privateKey) throws  ExpiredJwtException, MalformedJwtException{
         return Jwts.parser().setSigningKey(key)
                 .parseClaimsJws(privateKey)
                 .getBody();
