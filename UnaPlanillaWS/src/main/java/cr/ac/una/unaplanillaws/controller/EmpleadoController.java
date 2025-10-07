@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  *
  * @author gambo
  */
-//@Secure
+@Secure
 @Path("/EmpleadoController")
 @Tag(name="Empleados", description = "Operaciones sobre empleados")
 @SecurityRequirement(name = "jwt-auth")
@@ -77,7 +77,7 @@ public class EmpleadoController {
         }
     }
     
-//    @Secure
+    @Secure
     @GET
     @Path("/empleado/{id}")
     @Produces(MediaType.APPLICATION_JSON)

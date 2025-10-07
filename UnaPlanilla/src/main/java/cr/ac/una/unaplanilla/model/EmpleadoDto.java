@@ -31,6 +31,7 @@ public class EmpleadoDto {
     private BooleanProperty activo;
     private Long version;
     private Boolean modificado;
+    private String token;
     // TODO
 
     public EmpleadoDto() {
@@ -156,6 +157,14 @@ public class EmpleadoDto {
 
     public void setActivo(Boolean activo) {
         this.activo.set(activo);
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @JsonbTransient
