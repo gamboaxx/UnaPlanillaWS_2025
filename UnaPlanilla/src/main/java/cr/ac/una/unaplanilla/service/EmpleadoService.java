@@ -21,10 +21,8 @@ public class EmpleadoService {
                 Map<String,Object> parametros = new HashMap<>();
                 parametros.put("usuario", usuario);
                 parametros.put("clave", clave);
-
-                
                 Request request = new Request("EmpleadoController/usuario","/{usuario}/{clave}", parametros);
-                request.get();
+                request.getToken();
                 
                 if(request.isError()){
                 
@@ -42,30 +40,41 @@ public class EmpleadoService {
     }
     
     public Respuesta getEmpleado(Long id){
-    try {
-        
+    try {   
         Map<String,Object> parametros = new HashMap<>();
-        parametros.put("id", id);
-
-        
+        parametros.put("id", id);  
         Request request = new Request("EmpleadoController/empleado", "/{id}", parametros);
         request.get();
-
-        
+  
         if(request.isError()){
             return new Respuesta(false, request.getError(), "");
         }
 
-        
         EmpleadoDto empleadoDto = (EmpleadoDto) request.readEntity(EmpleadoDto.class);
-
-        
         return new Respuesta(true, "", "", "Empleado", empleadoDto);
 
     } catch (Exception ex) {
         Logger.getLogger(EmpleadoService.class.getName())
               .log(Level.SEVERE, "Error obteniendo el empleado [" + id + "]", ex);
         return new Respuesta(false, "Error obteniendo el empleado.", "getEmpleado " + ex.getMessage());
+    }
+}
+    
+    public Respuesta renovarToken(){
+    try {
+        Request request = new Request("EmpleadoController/renovar");
+        request.getRenewal();
+        
+        if(request.isError()){
+            return new Respuesta(false, request.getError(), "");
+        }
+        
+        String token = (String)request.readEntity(String.class);
+        return new Respuesta(true, "", "", "Token", token);
+    } catch (Exception ex) {
+        Logger.getLogger(EmpleadoService.class.getName())
+              .log(Level.SEVERE, "Error renovando el token", ex);
+        return new Respuesta(false, "Error renovando el token", "renovarToken " + ex.getMessage());
     }
 }
 
@@ -75,17 +84,12 @@ public class EmpleadoService {
         parametros.put("cedula", cedula);
         parametros.put("nombre", nombre);
         parametros.put("pApellido", pApellido);
-        parametros.put("sApellido", sApellido);
-
-        
+        parametros.put("sApellido", sApellido);       
         Request request = new Request("EmpleadoController/empleados", "/{cedula}/{nombre}/{pApellido}/{sApellido}", parametros);
         request.get();
-
-        
         if(request.isError()){
             return new Respuesta(false, request.getError(), "");
         }
-
         
         List<EmpleadoDto> empleadoDto = 
                 (List<EmpleadoDto>) request.readEntity(new GenericType<List<EmpleadoDto>>(){});
@@ -98,19 +102,15 @@ public class EmpleadoService {
     }
     
     public Respuesta guardarEmpleado(EmpleadoDto empleadoDto){
-        try {
-         
+        try {        
         Request request = new Request("EmpleadoController/empleado");
         request.post(empleadoDto);
-
-        
+       
         if(request.isError()){
             return new Respuesta(false, request.getError(), "");
         }
-
         
         EmpleadoDto empleado = (EmpleadoDto) request.readEntity(EmpleadoDto.class);
-
         
         return new Respuesta(true, "", "", "Empleado", empleado);
 
@@ -122,12 +122,9 @@ public class EmpleadoService {
     
     public Respuesta eliminarEmpleado(Long id){
         try{Map<String,Object> parametros = new HashMap<>();
-        parametros.put("id", id);
-
-        
+        parametros.put("id", id);       
         Request request = new Request("EmpleadoController/empleado", "/{id}", parametros);
         request.delete();
-
         
         if(request.isError()){
             return new Respuesta(false, request.getError(), "");
